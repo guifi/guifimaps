@@ -1,0 +1,439 @@
+MAP
+NAME "guifiWorld"
+SIZE 600 450
+TRANSPARENT OFF
+IMAGECOLOR 220 255 255
+IMAGETYPE JPEG
+STATUS ON
+SYMBOLSET "symbols/symbols.sym"
+FONTSET fonts/fonts.txt
+EXTENT -180 -90 180 90
+#EXTENT -2200000 -712631 3072800 3840000
+UNITS dd
+SHAPEPATH "../data/"
+
+PROJECTION
+   "init=epsg:4326"
+END
+    
+WEB
+#  MINSCALE 2000000
+# MAXSCALE 50000000
+  IMAGEPATH "/tmp/ms_tmp/"
+  IMAGEURL "/tmp/"
+END
+SYMBOL
+    NAME 'circle'
+    TYPE ELLIPSE
+    POINTS 
+      1 1 
+    END
+#    STYLE 5 2 2 5 END
+    FILLED TRUE
+END
+SYMBOL
+    NAME 'dashed'
+    TYPE ELLIPSE
+    POINTS 
+      1 1 
+    END
+    STYLE 2 2 2 2 END
+    FILLED TRUE
+END
+
+REFERENCE
+   IMAGE images/keymap.gif
+   EXTENT -180 -90 180 90
+   STATUS ON
+  COLOR -1 -1 -1
+  OUTLINECOLOR 255 0 0
+  SIZE 120 90
+END
+
+
+QUERYMAP
+  STYLE HILITE
+  COLOR 255 0 0
+END
+
+SCALEBAR
+  IMAGECOLOR 255 255 255
+  LABEL
+    COLOR 0 0 0
+    SIZE SMALL
+  END
+  SIZE 350 3
+  COLOR 255 255 255
+  BACKGROUNDCOLOR 0 0 0
+  OUTLINECOLOR 0 0 0
+  UNITS kilometers
+  INTERVALS 5
+  STATUS ON
+END
+
+
+
+# World, country borders
+LAYER
+    NAME "BaseMap"
+    TYPE POLYGON
+    STATUS ON
+    DATA cntry00
+    MINSCALE 30000000
+    CLASS
+        STYLE
+            COLOR 255 255 220
+            OUTLINECOLOR 176 177 189
+#            COLOR 255 255 255
+#            OUTLINECOLOR 0 0 0
+            SYMBOL 0
+        END
+    END
+    TOLERANCE 100
+END
+
+
+# World, country names
+LAYER
+    NAME "WorldCntryNames"
+    METADATA
+      "DESCRIPTION"   "WorldCntryNames"
+      "RESULT_FIELDS" "CNTRY_NAME LONG_NAME GMI_CNTRY"
+    END
+    TYPE POLYGON
+    STATUS ON
+    MAXSCALE 70000000
+    MINSCALE 300000
+    DATA cntry00
+    LABELITEM "CNTRY_NAME"
+    CLASS
+       NAME "WorldCntryName"
+       LABEL
+         COLOR  128 0 0 
+         FONT sans-italic
+         TYPE truetype
+         SIZE 9
+         POSITION LR
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 255
+       END
+       TEMPLATE "ttt_query.html"
+    END
+    TOLERANCE 100
+END
+
+# World, admin borders
+LAYER
+    NAME WorldAdmin
+    TYPE POLYGON
+    STATUS ON
+    MAXSCALE 30000000
+    MINSCALE 0
+    DATA "admin00"
+    CLASS
+        STYLE
+            COLOR 255 255 220
+            OUTLINECOLOR 176 177 189
+            SYMBOL 0
+        END
+        TEMPLATE "ttt_query.html"
+    END
+END
+
+# World, admin query
+LAYER
+    NAME WorldAdminQuery
+    TYPE POLYGON
+    STATUS OFF
+    DATA "admin00"
+    CLASS
+        TEMPLATE "ttt_query.html"
+    END
+    TOLERANCE 100
+END
+
+# World, admin names
+LAYER
+    NAME WorldAdminNames
+    METADATA
+      "DESCRIPTION"   "AdminNames"
+      "RESULT_FIELDS" "ADMIN_NAME GMI_ADMIN"
+    END
+    TYPE POLYGON
+    STATUS ON
+    MAXSCALE 9000000
+    MINSCALE 200000
+    DATA "admin00"
+    LABELITEM "ADMIN_NAME"
+    CLASS
+        NAME "WorldAdminNames"
+        LABEL
+         COLOR  255 0 0
+         FONT sans-italic
+         TYPE truetype
+         SIZE 7
+         POSITION UL
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 255
+        END
+        TEMPLATE "ttt_query.html"
+    END
+END
+
+############################################################################
+# Guifi shapefiles (nodes & links). 
+# KEEP THIS AT THE END OF EACH LOCAL MAPFILE
+############################################################################
+
+
+# Links 
+  LAYER
+    NAME Links
+    TYPE LINE
+    CONNECTIONTYPE OGR
+    CONNECTION "dlinks.gml"
+    TOLERANCE 8
+    STATUS ON
+    CLASS
+      NAME 'LinksWDS'
+      MAXSCALE 1000000000
+      EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'wds')
+      STYLE
+        SYMBOL 'circle'
+        COLOR 30 255 14
+        SIZE 2
+        MINSIZE 2
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'LinksClient'
+      MAXSCALE 1000000000
+      EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'ap/client')
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'LinksOffline'
+      MAXSCALE 1000000000
+      EXPRESSION ('[STATUS]' != 'Working')
+      STYLE
+        SYMBOL 'dashed'
+        COLOR 0 128 255
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    PROJECTION
+      "proj=latlong"
+      "ellps=WGS84"
+      "datum=WGS84"
+      "no_defs"
+    END
+    METADATA
+      "DESCRIPTION"   "Links"
+      "RESULT_FIELDS" "NODE1_ID NODE1_NAME NODE2_ID NODE2_NAME LINK_TYPE STATUS KMS NODE1_URL NODE2_URL"
+    END
+  END
+
+# Nodes 
+  LAYER
+    NAME Nodes
+    METADATA
+      "DESCRIPTION"   "Nodes"
+      "RESULT_FIELDS" "NODE_NAME NODE_TYPE STATUS NODE_URL"
+    END
+    LABELITEM NODE_NAME
+    TYPE POINT
+    CONNECTIONTYPE OGR
+    CONNECTION "dnodes.gml"
+    TOLERANCE 8
+    STATUS ON
+    CLASS
+      NAME 'NodesAP'
+      EXPRESSION ('[NODE_TYPE]' = 'ap' and '[STATUS]' = 'Working')
+      MINSCALE 100000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'NodesAPName'
+      EXPRESSION ('[NODE_TYPE]' = 'ap' and '[STATUS]' = 'Working')
+      MAXSCALE 100000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 255
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'Supernodes'
+      EXPRESSION ('[NODE_TYPE]' = 'Supernode' and '[STATUS]' = 'Working')
+      MINSCALE 250000
+      STYLE
+        SYMBOL 'star'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 8
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'SupernodesName'
+      EXPRESSION ('[NODE_TYPE]' = 'Supernode' and '[STATUS]' = 'Working')
+      MAXSCALE 250000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 7
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 255
+      END
+      STYLE
+        SYMBOL 'star'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 12
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'NodesProjected'
+      EXPRESSION ('[STATUS]' != 'Working')
+      MINSCALE 25000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'NodesProjectedName'
+      EXPRESSION ('[STATUS]' != 'Working')
+      MAXSCALE 25000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 5
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 255
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+    END
+    CLASS
+      NAME 'NodesClient'
+      EXPRESSION ('[NODE_TYPE]' = 'client' and '[STATUS]' = 'Working')
+      MINSCALE 25000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "ttt_query.html"
+    END
+    CLASS
+      NAME 'NodesClientName'
+      EXPRESSION ('[NODE_TYPE]' = 'client' and '[STATUS]' = 'Working')
+      MAXSCALE 25000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 5
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 255
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+    END
+    PROJECTION
+      "proj=latlong"
+      "ellps=WGS84"
+      "datum=WGS84"
+      "no_defs"
+    END
+    METADATA
+      WMS_TITLE "Supernodes"
+      WMS_ABSTRACT "Supernodes."
+    END
+  END
+
+# Layer POINTER
+LAYER
+  NAME Pointer
+  TYPE POINT
+  TRANSPARENCY 100
+  STATUS ON
+  LABELITEM Clicked
+  CLASS
+      SYMBOL 'star' SIZE 10
+      COLOR 255 0 0
+      OUTLINECOLOR 0 0 0
+    END
+END
+
+LAYER
+  NAME copyright
+  STATUS on
+  TYPE annotation
+  TRANSFORM false
+  FEATURE
+    POINTS
+      25 10 #this is the position of the text in image coordinates (pixels)
+    END
+    TEXT "guifi.net" #this is your displaying text
+  END   
+  CLASS
+    LABEL #defines the font, colors etc. of the text
+      FONT "sans"
+      TYPE TRUETYPE
+      SIZE 8
+      BUFFER 1
+      COLOR 0 0 0
+      OUTLINECOLOR 255 255 255
+      FORCE TRUE
+    END
+  END 
+END
+
+END
+
