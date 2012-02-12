@@ -60,14 +60,14 @@ if (PHP_OS == "WINNT" || PHP_OS == "WIN32")
 else
     $dlext = "so";
 
-if (!extension_loaded("MapScript"))
-{
-    dl("php_mapscript.$dlext");
-}
-if (!extension_loaded("dbase"))
-{
-    dl("php_dbase.$dlext");
-}
+//if (!extension_loaded("MapScript"))
+//{
+//    dl("php_mapscript.$dlext");
+//}
+//if (!extension_loaded("dbase"))
+//{
+//    dl("php_dbase.$dlext");
+//}
 
 
 /* -------------------------------------------------------------------- */
@@ -75,9 +75,9 @@ if (!extension_loaded("dbase"))
 /* -------------------------------------------------------------------- */
 /*if (file_exists('/tmp/ms_tmp/REBUILD')) {
   unlink('/tmp/ms_tmp/REBUILD');
-  exec('/home1/fgs/www/htdocs/data/refresh.sh');
+  exec('data/refresh.sh');
 }*/ 
-
+GLOBAL $HTTP_FORM_VARS;
 $gszCommand = $HTTP_FORM_VARS["CMD"];
 if ( sizeof($gszCommand) == 0)
 {
@@ -100,7 +100,7 @@ if ($HTTP_FORM_VARS["REGION_ID"]) {
   $HTTP_FORM_VARS['Layers'] = 'all';
 }
 
-if ($HTTP_FORM_VARS['Layers'] == 'all') {
+if ($_GET['Layers'] == 'all') {
    $HTTP_FORM_VARS['local_maps'] = 'Y';
    $HTTP_FORM_VARS['Supernodes'] = 'Y';
    $HTTP_FORM_VARS['NodesAP'] = 'Y';
@@ -704,9 +704,4 @@ function MapSizeSelected()
 </FORM>
 </BODY>
 </HTML>
-
-
-
-                                                                                                                               
-
 

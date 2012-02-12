@@ -48,7 +48,7 @@
    fclose($hlinks);
   }
 
-  $hlinks = @fopen('../data/dlinks.gml', 'w') or die("Error!!");
+  $hlinks = @fopen('data/dlinks.gml', 'w') or die("Error!!");
   fwrite($hlinks, '<?xml version="1.0" encoding="utf-8" ?>
 <ogr:FeatureCollection
      xmlns:xsi="http://www.w3c.org/2001/XMLSchema-instance"
@@ -103,7 +103,7 @@
    fclose($hnodes);
   }
 
-  $hnodes = @fopen('../data/dnodes.gml', 'w') or die("Error!!");
+  $hnodes = @fopen('data/dnodes.gml', 'w') or die("Error!!");
   fwrite($hnodes, '<?xml version="1.0" encoding="utf-8" ?>
 <ogr:FeatureCollection
      xmlns:xsi="http://www.w3c.org/2001/XMLSchema-instance"

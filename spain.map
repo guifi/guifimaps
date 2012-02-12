@@ -9,13 +9,14 @@ SYMBOLSET "symbols/symbols.sym"
 FONTSET fonts/fonts.txt
 EXTENT -180 -90 180 90
 UNITS dd
-SHAPEPATH "../data/"
+SHAPEPATH "data/"
 
 PROJECTION
    "init=epsg:4326"
 END
     
 WEB
+  TEMPLATE "web.html"
   IMAGEPATH "/tmp/ms_tmp/"
   IMAGEURL "/tmp/"
 END

@@ -1,581 +1,63 @@
 MAP
-NAME "guifiCatalunya"
-SIZE 600 450
+NAME "WMS_guifi.net"
+SIZE 800 600
 TRANSPARENT OFF
 IMAGECOLOR 220 255 255
-IMAGETYPE JPEG 
+IMAGETYPE JPEG
 STATUS ON
-SYMBOLSET "symbols/symbols.sym"
+SYMBOLSET "guifi_symbols.sym"
 FONTSET fonts/fonts.txt
 EXTENT -180 -90 180 90
 UNITS dd
-SHAPEPATH "../data/"
+SHAPEPATH "data/"
 
 PROJECTION
    "init=epsg:4326"
-#    proj=utm
-#    units=m
-#    zone=31
-#    ellps=intl
 END
-    
+
 WEB
+  TEMPLATE "web.html"
   IMAGEPATH "/tmp/ms_tmp/"
   IMAGEURL "/tmp/"
- #*************-Afegit IDEC--Descripició de les capacitats 
+ #*************-Afegit IDEC--Descripició de les capacitats
   METADATA
     WMS_TITLE "Nodes GUIFI.NET"
     WMS_ABSTRACT "Localització de nodes"
     WMS_FEATURE_INFO_MIME_TYPE  "text/html"
-    WMS_ONLINERESOURCE "http://wms.guifi.net/cgi-bin/mapserv?map=guifimaps/GMap.map&"
+    WMS_ONLINERESOURCE "http://wms.guifi.net/cgi-bin/mapserv?map=/home/guifi/maps.guifi.net/guifimaps/GMap.map&"
     WMS_SRS "EPSG:4326 EPSG:23031"
   END
- #*************-Final afegit 
-  
+ #*************-Final afegit
 END
 
-SYMBOL
-    NAME 'circle'
-    TYPE ELLIPSE
-    POINTS 
-      1 1 
-    END
-    FILLED TRUE
-END
-SYMBOL
-    NAME 'dashed'
-    TYPE ELLIPSE
-    POINTS 
-      1 1 
-    END
-    STYLE 2 2 2 2 END
-    FILLED TRUE
-END
-
-REFERENCE
-   IMAGE images/key_catalunya.png
-   EXTENT 0.127079 40.465125 3.371953 42.898781
-   STATUS ON
-#   units dd
-   COLOR -1 -1 -1
-   OUTLINECOLOR 255 0 0
-   SIZE 120 90
-END
-
-
-QUERYMAP
-  STYLE HILITE
-  COLOR 255 0 0
-END
-
-SCALEBAR
-  IMAGECOLOR 255 255 255
-  LABEL
-    COLOR 0 0 0
-    SIZE SMALL
-  END
-  SIZE 350 3
-  COLOR 255 255 255
-  BACKGROUNDCOLOR 0 0 0
-  OUTLINECOLOR 0 0 0
-  UNITS kilometers
-  INTERVALS 5
-  STATUS ON
-END
-
-
-# World, admin borders
-LAYER
-    NAME BaseMap
-    TYPE POLYGON
-    STATUS on
-    MINSCALE 500000
-    DATA "admin00"
-    LABELITEM "ADMIN_NAME"
-    CLASS
-        STYLE
-            COLOR 255 255 220
-            OUTLINECOLOR 176 177 189
-            SYMBOL 0
-        END
-        NAME "WorldAdmin"
-    END
-END
-
-
-#####################################################################
-# Put here base opaque layers such topos, ortophotos
-#####################################################################
-
-# Catalunya, Municipis (ICC)
-LAYER
-      NAME "Municipis"
-      TYPE POLYGON
-      TRANSPARENCY 0
-      STATUS on
-      DATA catalunya/municipis
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-      MAXSCALE 700000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "Municipis"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-    CLASS
-        STYLE
-            COLOR 255 255 220
-#            COLOR -1 -1 -1 -1
-            OUTLINECOLOR 176 177 189
-#            OUTLINECOLOR 176 177 189
-#            SYMBOL 0
-        END
-        NAME "Municipis"
-        TEMPLATE "ttt_query.html"
-    END
-END
-
-# Catalunya, Comarques (ICC)
-LAYER
-      NAME "Comarques"
-      TYPE POLYGON
-      TRANSPARENCY 0
-      STATUS on
-      DATA catalunya/comarques
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-      MAXSCALE 5000000
-      MINSCALE 500
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "Comarques"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-    CLASS
-        STYLE
-#            COLOR 255 255 220
-#            OUTLINECOLOR 176 177 189
-            OUTLINECOLOR 100 100 100
-#            SYMBOL 0
-        END
-        NAME "Comarques"
-        TEMPLATE "ttt_query.html"
-    END
-END
-
-# EOF Catalunya opaque layers
-############################################################################
-
-#####################################################################
-# Put here transparent layers such roads, administrative limits...
-#####################################################################
-
-#####################################################################
-# Maps of Catalunya (ICC - www.icc.es)
-#####################################################################
-
-
-# Catalunya, Peticio al servidor ICC topo 50.000 Hidrografia
-LAYER
-      NAME "Topo50KHidrografia"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 50000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_HIDR_hidrografia_contorns"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-LAYER
-      NAME "Topo50KHidrografiaPoligon"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 50000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_HIDR_hidrografia_poligonal"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-LAYER
-      NAME "Topo50KHidrografiaLineal"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 50000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_HIDR_hidrografia_lineal"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-
-# Catalunya, Peticio al servidor ICC topo 50.000 Toponims
-LAYER
-      NAME "Topo50KToponims"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_TOP_toponimia"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    END
-
-# Catalunya, Peticio al servidor ICC topo 50.000 VXLoc
-LAYER
-      NAME "Topo50KVXLoc"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_VPRIN_xarxa_local"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-
-
-
-# Catalunya Peticio al servidor ICC topo 50.000 Urb Secundaries
-LAYER
-      NAME "Topo50KVUSec"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_VSEC_vies_urbanes"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    END
-
-
-# Catalunya, Peticio al servidor ICC topo 50.000 Secundaries
-LAYER
-      NAME "Topo50KVSec"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_VSEC_altres_vies"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    END
-
-# Catalunya, Peticio al servidor ICC topo 50.000 VPrin
-LAYER
-      NAME "Topo50KVPrin"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_VPRIN_xarxa_basica"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    END
-
-
-# Catalunya, Peticio al servidor ICC topo 50.000 VAuto
-LAYER
-      NAME "Topo50KVAuto"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_VPRIN_autopista_via_preferent"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    END
-
-# Catalunya, Edificacions 
-LAYER
-      NAME "Topo50KEdif"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt50m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 100000
-      MINSCALE 50000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT50M_POB_edificacions_i_construccions"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-LAYER
-      NAME "Topo5KEdificacions"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt5m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 50000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT5M_POB_Edificacions"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-LAYER
-      NAME "Topo5KConstruccions"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt5m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 50000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "BT5M_POB_Construccions"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-LAYER
-      NAME "Topo5KVies"
-      TYPE RASTER
-      STATUS on
-      TRANSPARENCY 0
-      CONNECTION "http://galileo.icc.es/wms/servlet/icc_bt5m_v_r?"
-      CONNECTIONTYPE WMS
-      MAXSCALE 50000
-      MINSCALE 25000
-      METADATA
-        "wms_srs"             "EPSG:23031"
-        "wms_name"            "Vies"
-        "wms_server_version"  "1.1.0"
-        "wms_format"          "image/png"
-      END
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-    END
-
-
-
-
-
-# Catalunya, Noms de Comarca
-LAYER
-    NAME "Noms_de_Comarca"
-    METADATA
-      "DESCRIPTION"   "Noms_de_Comarca"
-      "RESULT_FIELDS" "NOM_COMAR"
-    END
-    TYPE POLYGON
-    STATUS ON
-    DATA catalunya/comarques
-    LABELITEM "NOM_COMAR"
-    TRANSPARENCY 100
-    MAXSCALE 1300000
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    CLASS
-       NAME "NOM_COMAR"
-       LABEL
-         COLOR  128 0 0
-         FONT sans-italic
-         TYPE truetype
-         SIZE 9
-         POSITION AUTO
-         PARTIALS FALSE
-         OUTLINECOLOR 255 255 253
-       END
-      TEMPLATE "ttt_query.html"
-    END
-    TOLERANCE 5
-END
-
-# Catalunya, Noms de Municipi
-LAYER
-    NAME "Noms_de_Municipi"
-    METADATA
-      "DESCRIPTION"   "Noms_de_Municipi"
-      "RESULT_FIELDS" "NOM_MUNI"
-    END
-    TYPE POLYGON
-    STATUS ON
-    DATA catalunya/municipis
-    LABELITEM "NOM_MUNI"
-    TRANSPARENCY 100
-    MAXSCALE 350000
-      PROJECTION
-      "init=epsg:23031"
-      "towgs84=-84,-97,-117"
-      END
-
-    CLASS
-       NAME "NOM_MUNI"
-       LABEL
-         COLOR  128 0 0
-         FONT sans-italic
-         TYPE truetype
-         SIZE 7
-         POSITION AUTO
-         PARTIALS FALSE
-         OUTLINECOLOR 255 255 253
-       END
-      TEMPLATE "ttt_query.html"
-    END
-    TOLERANCE 5
-END
-
-
-
-########################################################################################
-# END Of local maps, insert here common layers
-########################################################################################
-
-
-# Links 
+# Links
   LAYER
     NAME Links
     TYPE LINE
-#    CONNECTIONTYPE OGR
-#    CONNECTION "dlinks.gml"
     DATA dlinks/dlinks
     TOLERANCE 8
     STATUS ON
-    CLASS
-      NAME 'LinksWDS'
-      MAXSCALE 1000000000
-      EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'wds')
-      STYLE
-        SYMBOL 'circle'
-        COLOR 30 255 14
-        SIZE 2
-        MINSIZE 2
-      END
-      TEMPLATE "links.html"
-    END
     CLASS
       NAME 'LinksClient'
       MAXSCALE 1000000000
       EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'ap/client')
       STYLE
         SYMBOL 'circle'
-        COLOR 0 255 0
+        COLOR 212 255 128
         SIZE 1
         MINSIZE 1
+      END
+      TEMPLATE "links.html"
+    END
+    CLASS
+      NAME 'LinksWDS'
+      MAXSCALE 1000000000
+      EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'wds')
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        SIZE 2
+        MINSIZE 2
       END
       TEMPLATE "links.html"
     END
@@ -601,19 +83,19 @@ END
       "datum=WGS84"
       "no_defs"
     END
-	#*************-Afegit IDEC--Descripició de les capacitats 
+	#*************-Afegit IDEC--DescripiciÃ³ de les capacitats
 	METADATA
       WMS_TITLE "Links"
       WMS_ABSTRACT "Links"
       WMS_SRS "EPSG:4326 EPSG:23031"
 	  #Exposició Web Feature Service
-	  "wfs_title"    "Links" 
-      "gml_include_items" "ALL"  
+	  "wfs_title"    "Links"
+      "gml_include_items" "ALL"
 	END
-	 #*************-Final afegit 
+	 #*************-Final afegit
   END
 
-# Nodes 
+# Nodes
   LAYER
     NAME Nodes
     METADATA
@@ -622,8 +104,6 @@ END
     END
     LABELITEM NODE_NAME
     TYPE POINT
-#    CONNECTIONTYPE OGR
-#    CONNECTION "dnodes.gml"
     DATA dnodes/dnodes
     TOLERANCE 8
     STATUS ON
@@ -675,7 +155,6 @@ END
     CLASS
       NAME 'SupernodesName'
       EXPRESSION ('[NODE_TYPE]' = 'Supernode' and '[STATUS]' = 'Working')
-#      MAXSCALE 250000
       LABEL
          COLOR  44 6 126
          FONT sans
@@ -757,6 +236,59 @@ END
         SIZE 4
       END
     END
+    CLASS
+      NAME 'NodesClientName'
+      EXPRESSION ('[NODE_TYPE]' = 'client' and '[STATUS]' = 'Working')
+      MAXSCALE 25000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+    END
+    CLASS
+      NAME 'NodesADHOC'
+      EXPRESSION ('[NODE_TYPE]' = 'ad-hoc' and '[STATUS]' = 'Working')
+      MINSCALE 25000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 160 160 255
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesADHOCName'
+      EXPRESSION ('[NODE_TYPE]' = 'ad-hoc' and '[STATUS]' = 'Working')
+      MAXSCALE 25000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 150 150
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
     PROJECTION
       "proj=latlong"
       "ellps=WGS84"
@@ -765,55 +297,16 @@ END
     END
     METADATA
       WMS_TITLE "Supernodes"
-      WMS_ABSTRACT "Supernodes."
-	  
-	  #*************-Afegit IDEC--Descripició de les capacitats 
-      WMS_SRS "EPSG:4326 EPSG:23031"
-	  #Exposició Web Feature Service
-	  "wfs_title"    "Supernodes" 
-      "gml_include_items" "ALL"  
-      #*************-Final afegit 
-    
+      WMS_ABSTRACT "Supernodes"
+      #*************-Afegit IDEC--Descripició de les capacitats
+      WMS_SRS "EPSG:4326 EPSG:23031 EPSG:3857"
+      #Exposició Web Feature Service
+      "wfs_title"    "Supernodes"
+      "gml_include_items" "ALL"
+      #*************-Final afegit
+
 	END
   END
-
-# Layer POINTER
-LAYER
-  NAME Pointer
-  TYPE POINT
-  TRANSPARENCY 100
-  STATUS ON
-  LABELITEM Clicked
-  CLASS
-      SYMBOL 'star' SIZE 10
-      COLOR 255 0 0
-      OUTLINECOLOR 0 0 0
-    END
-END
-
-LAYER
-  NAME copyright
-  STATUS on
-  TYPE annotation
-  TRANSFORM false
-  FEATURE
-    POINTS
-      155 10 #this is the position of the text in image coordinates (pixels)
-    END
-    TEXT "guifi.net & Institut Cartogràfic de Catalunya (www.icc.es)" #this is your displaying text
-  END   
-  CLASS
-    LABEL #defines the font, colors etc. of the text
-      FONT "sans"
-      TYPE TRUETYPE
-      SIZE 8
-      BUFFER 1
-      COLOR 0 0 0
-      OUTLINECOLOR 255 255 253
-      FORCE TRUE
-    END
-  END 
-END
 
 END
 

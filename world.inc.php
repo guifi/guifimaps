@@ -54,12 +54,13 @@ for permission.
 
 $gDebug = "";
 
-if (sizeof($HTTP_POST_VARS) > 0)
-  $HTTP_FORM_VARS = $HTTP_POST_VARS;
-else if (sizeof($HTTP_GET_VARS) > 0)
-  $HTTP_FORM_VARS = $HTTP_GET_VARS;
+if (sizeof($_POST) > 0)
+  $HTTP_FORM_VARS = $_POST;
+else if (sizeof($_GET) > 0)
+  $HTTP_FORM_VARS = $_GET;
 else
   $HTTP_FORM_VARS = array("");
+
 
 
 /* ==================================================================== */

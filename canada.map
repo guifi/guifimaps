@@ -500,8 +500,7 @@ LAYER
   LAYER
     NAME Links
     TYPE LINE
-    CONNECTIONTYPE OGR
-    CONNECTION "dlinks.gml"
+    DATA dlinks/dlinks
     STATUS ON
     CLASS
       NAME 'LinksWDS'
@@ -560,8 +559,7 @@ LAYER
     END
     LABELITEM NODE_NAME
     TYPE POINT
-    CONNECTIONTYPE OGR
-    CONNECTION "dnodes.gml"
+    DATA dnodes/dnodes
     STATUS ON
     CLASS
       NAME 'NodesAP'
