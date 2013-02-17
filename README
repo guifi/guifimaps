@@ -1,53 +1,5 @@
-INSTALL
--------
+CRON
 
-INSTALL fgs:
-http://maptools.org/fgs/
-
-Deploy guifimaps directory in the $FGS_HOME/www/htdocs
-
-Customize your guifimaps/config.inc.php with your settings
-
-Enjoy at http://yourhost.yourdomain:yourport/guifimaps/
-
-Note: You should provide $FGS_HOME/www/htdocs/data 
-data files are NOT distributed with guifimaps, you should contact 
-the sources.
-
-
-GENERAL INFORMATION
--------------------
-
-guifimaps is a mapserver/mapscript app based on the gmap demo
-
-Network information is acquired in gml format
-Zones information is acquired in nodexchange xml format
-
-guifimaps suport multiple zones and can work both serving locally
-installed maps, or ask them to external WMS services (recommended
-for high detail scales, like 5K.
-
-For more details, get subscribed to the guifi-rd list (see below).
-
-
-NOTES FOR DEVELOPERS/CONTRIBUTORS
----------------------------------
-
-Patches are wellcome, use svn diff for this purpose and
-submit to the guifi research and development list:
-guifi-rd _at_ guifi.net
-To subscribe: guifi-rd-subscribe _at_ guifi.net
-
-
-For translations:
-1.-Add the language in the $languages array at config
-2.-Create the new lang/XX.php
-
-For adding new zones and maps:
-1.-Create the .map for your region and provide your data
-2.-Plug your .map at the licalmaps.inc.php, looc at Spain or 
-Catalunya examples. One Region can have others inside.i
--Scale 1:25000 is good enough for a reasonable accuracy.
-       1:5000 is great
+3,18,33,48 * * * * cd /home/guifi/maps.guifi.net/guifimaps; php refresh.php > /dev/null 2>&1; cd data; rm -rf dlinks/*; rm -rf dnodes/*; ogr2ogr -f "ESRI Shapefile" dlinks dlinks.gml; ogr2ogr -f "ESRI Shapefile" dnodes dnodes.gml
 
 

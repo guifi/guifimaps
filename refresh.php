@@ -7,37 +7,32 @@
   $maxX = -999;
   $maxY = -999;
 
-  $members = array(); 
+  $members = array();
 
   $hlastnow = @fopen("http://guifi.net/guifi/refresh/maps", "r") or die('Error reading changes\n');
   $last_now = fgets($hlastnow);
   fclose($hlastnow);
-  $hlast= @fopen("/tmp/last_update", "r") or die('Error!');
+
+  clearstatcache();
+  if(!file_exists("/tmp/last_update")) {
+   $fp = fopen("/tmp/last_update","w");
+   fwrite($fp,"0");
+   fclose($fp);
+  }
+
+  $hlast= @fopen("/tmp/last_update", "r") or die('Error reading /tmp/last_update !');
   if ($last_now == fgets($hlast)) {
     fclose($hlast);
     echo "No changes.\n";
-//    exit();
   }
 
-//  echo "Getting zones in CNML format\n";
-//  $hzones = @fopen("http://guifi.net/guifi/cnml/".$rootZone."/zones", "r");
-//  $wzones = @fopen("zones.xml", "w");
-//  while (!feof($hzones)) {
-//       $buffer = fgets($hzones, 4096);
-//       fwrite($wzones,$buffer);
-//  }
-//  fclose($hzones);
-//  fclose($wzones);
-        
-     
-  
   echo "Dumping links in gml format\n";
   $hlinks = @fopen("http://guifi.net/guifi/gml/".$rootZone."/links/csv", "r") or die("Error getting links cv\n");;
   if ($hlinks) {
    while (!feof($hlinks)) {
        print_r($member);
        $member = explode(',',stream_get_line($hlinks, 4096,"\n"));
-       $members[] = $member; 
+       $members[] = $member;
        if (count($member) == 12) {
          if ($minX > $member[8]) $minX=$member[8];
          if ($minY > $member[9]) $minY=$member[9];
@@ -84,14 +79,14 @@
   $maxX = -999;
   $maxY = -999;
 
-  $members = array(); 
+  $members = array();
 
   echo "Dumping nodes in gml format\n";
   $hnodes = @fopen("http://guifi.net/guifi/gml/".$rootZone."/nodes/csv", "r");
   if ($hnodes) {
    while (!feof($hnodes)) {
        $member = explode(',',stream_get_line($hnodes, 4096,"\n"));
-       $members[] = $member; 
+       $members[] = $member;
        if (count($member) == 6) {
          if ($minX > $member[1]) $minX=$member[1];
          if ($minY > $member[2]) $minY=$member[2];
@@ -118,8 +113,8 @@
   </gml:boundedBy>'."\n");
 
   foreach ($members as $member)
-  if (count($member) == 6) 
-  fwrite($hnodes, 
+  if (count($member) == 6)
+  fwrite($hnodes,
 '  <gml:featureMember>
     <dnodes fid="'.$member[0].'">
       <ogr:geometryProperty><gml:Point><gml:coordinates>'.$member[1].','.$member[2].'</gml:coordinates></gml:Point></ogr:geometryProperty>

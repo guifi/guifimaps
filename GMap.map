@@ -10,14 +10,14 @@ FONTSET fonts/fonts.txt
 EXTENT -180 -90 180 90
 UNITS dd
 SHAPEPATH "data/"
-
+CONFIG "MS_ERRORFILE" "/tmp/ms_error.txt"
 PROJECTION
    "init=epsg:4326"
 END
 
 WEB
   TEMPLATE "web.html"
-  IMAGEPATH "/tmp/ms_tmp/"
+  IMAGEPATH "/tmp/ms_tmp"
   IMAGEURL "/tmp/"
  #*************-Afegit IDEC--Descripició de les capacitats
   METADATA
@@ -26,8 +26,10 @@ WEB
     WMS_FEATURE_INFO_MIME_TYPE  "text/html"
     WMS_ONLINERESOURCE "http://wms.guifi.net/cgi-bin/mapserv?map=/home/guifi/maps.guifi.net/guifimaps/GMap.map&"
     WMS_SRS "EPSG:4326 EPSG:23031"
+"wms_enable_request"   "*"
   END
  #*************-Final afegit
+
 END
 
 # Links
@@ -42,7 +44,7 @@ END
       MAXSCALE 1000000000
       EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'ap/client')
       STYLE
-        SYMBOL 'circle'
+#        SYMBOL 'circle'
         COLOR 212 255 128
         SIZE 1
         MINSIZE 1
@@ -54,10 +56,10 @@ END
       MAXSCALE 1000000000
       EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'wds')
       STYLE
-        SYMBOL 'circle'
+#        SYMBOL 'line'
         COLOR 0 255 0
-        SIZE 2
-        MINSIZE 2
+        SIZE 3
+        MINSIZE 3
       END
       TEMPLATE "links.html"
     END
@@ -68,6 +70,7 @@ END
       STYLE
         SYMBOL 'dashed'
         COLOR 0 128 255
+        PATTERN 2 2 2 2 END
         SIZE 1
         MINSIZE 1
       END
