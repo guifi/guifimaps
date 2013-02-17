@@ -1,0 +1,37 @@
+SYMBOLSET
+
+SYMBOL
+ name "circle"
+ type ellipse
+ points 1 1 end
+ filled true
+END
+
+SYMBOL
+ name "dashed"
+ type ellipse
+ points 1 1 end
+# style 2 2 2 2 END
+ filled true
+END
+
+
+SYMBOL
+ name "star"
+ type VECTOR
+ filled true
+ points
+	0 .375
+	.35 .375
+	.5 0
+	.65 .375
+	1 .375
+	.75 .625
+	.875 1
+	.5 .75
+	.125 1
+	.25 .625
+ end
+END
+
+
