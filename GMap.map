@@ -41,7 +41,7 @@ END
     STATUS ON
     CLASS
       NAME 'LinksClient'
-      MAXSCALE 1000000000
+      MAXSCALE 100000
       EXPRESSION ('[STATUS]' = 'Working' AND '[LINK_TYPE]' = 'ap/client')
       STYLE
 #        SYMBOL 'circle'
@@ -58,15 +58,28 @@ END
       STYLE
 #        SYMBOL 'line'
         COLOR 0 255 0
-        SIZE 3
-        MINSIZE 3
+        SIZE 1.5
+        MINSIZE 1.5
       END
       TEMPLATE "links.html"
     END
     CLASS
-      NAME 'LinksOffline'
+      NAME 'LinksPlannedWDS'
       MAXSCALE 1000000000
-      EXPRESSION ('[STATUS]' != 'Working')
+      EXPRESSION ('[STATUS]' = 'Planned' AND '[LINK_TYPE]' = 'wds')
+      STYLE
+        SYMBOL 'dashed'
+        COLOR 0 128 255
+        PATTERN 2 2 2 2END
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "links.html"
+    END
+    CLASS
+      NAME 'LinksPlanned'
+      MAXSCALE 10000
+      EXPRESSION ('[STATUS]' = 'Planned')
       STYLE
         SYMBOL 'dashed'
         COLOR 0 128 255
@@ -76,6 +89,46 @@ END
       END
       TEMPLATE "links.html"
     END
+    CLASS
+      NAME 'LinksTesting'
+      MAXSCALE 10000
+      EXPRESSION ('[STATUS]' = 'Testing')
+      STYLE
+        SYMBOL 'dashed'
+        COLOR 255 127 0
+        PATTERN 2 2 2 2 END
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "links.html"
+    END
+    CLASS
+      NAME 'LinksBuilding'
+      MAXSCALE 10000
+      EXPRESSION ('[STATUS]' = 'Building')
+      STYLE
+        SYMBOL 'dashed'
+        COLOR 255 236 139
+        PATTERN 2 2 2 2 END
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "links.html"
+    END
+    CLASS
+      NAME 'LinksOffline'
+      MAXSCALE 10000
+      EXPRESSION ('[STATUS]' != 'Working' and [STATUS]' != 'Planned' and '[STATUS]' != 'Building' and '[STATUS]' != 'Testing')
+      STYLE
+        SYMBOL 'dashed'
+        COLOR 255 255 255
+        PATTERN 2 2 2 2 END
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "links.html"
+    END
+
     METADATA
       "DESCRIPTION"   "Links"
       "RESULT_FIELDS" "NODE1_ID NODE1_NAME NODE2_ID NODE2_NAME LINK_TYPE STATUS KMS NODE1_URL NODE2_URL"
@@ -86,7 +139,7 @@ END
       "datum=WGS84"
       "no_defs"
     END
-	#*************-Afegit IDEC--DescripiciÃ³ de les capacitats
+	#*************-Afegit IDEC--Descripició de les capacitats
 	METADATA
       WMS_TITLE "Links"
       WMS_ABSTRACT "Links"
@@ -110,6 +163,8 @@ END
     DATA dnodes/dnodes
     TOLERANCE 8
     STATUS ON
+
+
     CLASS
       NAME 'NodesAP'
       EXPRESSION ('[NODE_TYPE]' = 'ap' and '[STATUS]' = 'Working')
@@ -130,7 +185,7 @@ END
          COLOR  44 6 126
          FONT sans
          TYPE truetype
-         SIZE 8
+         SIZE 6
          POSITION AUTO
          PARTIALS FALSE
          OUTLINECOLOR 255 255 253
@@ -139,19 +194,21 @@ END
         SYMBOL 'circle'
         COLOR 0 255 0
         OUTLINECOLOR 0 0 0
-        SIZE 8
+        SIZE 5
       END
       TEMPLATE "nodes.html"
     END
+
+
     CLASS
       NAME 'Supernodes'
       EXPRESSION ('[NODE_TYPE]' = 'Supernode' and '[STATUS]' = 'Working')
-      MINSCALE 250000
+      MINSCALE 100000
       STYLE
         SYMBOL 'star'
         COLOR 0 255 0
         OUTLINECOLOR 0 0 0
-        SIZE 9
+        SIZE 7
       END
       TEMPLATE "nodes.html"
     END
@@ -175,42 +232,11 @@ END
       END
       TEMPLATE "nodes.html"
     END
-    CLASS
-      NAME 'NodesProjected'
-      EXPRESSION ('[STATUS]' != 'Working')
-      MINSCALE 25000
-      STYLE
-        SYMBOL 'circle'
-        COLOR 255 255 0
-        OUTLINECOLOR 0 0 0
-        SIZE 4
-      END
-      TEMPLATE "nodes.html"
-    END
-    CLASS
-      NAME 'NodesProjectedName'
-      EXPRESSION ('[STATUS]' != 'Working')
-      MAXSCALE 25000
-      LABEL
-         COLOR  44 6 126
-         FONT sans
-         TYPE truetype
-         SIZE 6
-         POSITION AUTO
-         PARTIALS FALSE
-         OUTLINECOLOR 255 255 253
-      END
-      STYLE
-        SYMBOL 'circle'
-        COLOR 255 255 0
-        OUTLINECOLOR 0 0 0
-        SIZE 4
-      END
-    END
+
     CLASS
       NAME 'NodesClient'
       EXPRESSION ('[NODE_TYPE]' = 'client' and '[STATUS]' = 'Working')
-      MINSCALE 25000
+      MINSCALE 10000
       STYLE
         SYMBOL 'circle'
         COLOR 0 255 0
@@ -222,7 +248,7 @@ END
     CLASS
       NAME 'NodesClientName'
       EXPRESSION ('[NODE_TYPE]' = 'client' and '[STATUS]' = 'Working')
-      MAXSCALE 25000
+      MAXSCALE 10000
       LABEL
          COLOR  44 6 126
          FONT sans
@@ -236,45 +262,26 @@ END
         SYMBOL 'circle'
         COLOR 0 255 0
         OUTLINECOLOR 0 0 0
-        SIZE 4
+        SIZE 7
       END
     END
+
     CLASS
-      NAME 'NodesClientName'
-      EXPRESSION ('[NODE_TYPE]' = 'client' and '[STATUS]' = 'Working')
-      MAXSCALE 25000
-      LABEL
-         COLOR  44 6 126
-         FONT sans
-         TYPE truetype
-         SIZE 6
-         POSITION AUTO
-         PARTIALS FALSE
-         OUTLINECOLOR 255 255 253
-      END
-      STYLE
-        SYMBOL 'circle'
-        COLOR 0 255 0
-        OUTLINECOLOR 0 0 0
-        SIZE 4
-      END
-    END
-    CLASS
-      NAME 'NodesADHOC'
-      EXPRESSION ('[NODE_TYPE]' = 'ad-hoc' and '[STATUS]' = 'Working')
-      MINSCALE 25000
+      NAME 'NodesMESH'
+      EXPRESSION ('[NODE_TYPE]' = 'mesh' and '[STATUS]' = 'Working')
+      MINSCALE 10000
       STYLE
         SYMBOL 'circle'
         COLOR 160 160 255
         OUTLINECOLOR 0 0 0
-        SIZE 7
+        SIZE 4
       END
       TEMPLATE "nodes.html"
     END
     CLASS
-      NAME 'NodesADHOCName'
-      EXPRESSION ('[NODE_TYPE]' = 'ad-hoc' and '[STATUS]' = 'Working')
-      MAXSCALE 25000
+      NAME 'NodesMESHName'
+      EXPRESSION ('[NODE_TYPE]' = 'mesh' and '[STATUS]' = 'Working')
+      MAXSCALE 10000
       LABEL
          COLOR  44 6 126
          FONT sans
@@ -287,6 +294,237 @@ END
       STYLE
         SYMBOL 'circle'
         COLOR 255 150 150
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesADHOC'
+      EXPRESSION ('[NODE_TYPE]' = 'ad-hoc' and '[STATUS]' = 'Working')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 160 160 255
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesADHOCName'
+      EXPRESSION ('[NODE_TYPE]' = 'ad-hoc' and '[STATUS]' = 'Working')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 150 150
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesProjected'
+      EXPRESSION ('[STATUS]' = 'Planned')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 255
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesProjectedName'
+      EXPRESSION ('[STATUS]' = 'Planned')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 255 255
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesTesting'
+      EXPRESSION ('[STATUS]' = 'Testing')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 127 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesTestingName'
+      EXPRESSION ('[STATUS]' = 'Testing')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 127 0
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesInactive'
+      EXPRESSION ('[STATUS]' = 'Inactive')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 192 192 192
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesInactiveName'
+      EXPRESSION ('[STATUS]' = 'Inactive')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 192 192 192
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesBuilding'
+      EXPRESSION ('[STATUS]' = 'Building')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 236 139
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesBuildingName'
+      EXPRESSION ('[STATUS]' = 'Building')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 236 139
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesReserved'
+      EXPRESSION ('[STATUS]' = 'Reserved')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 255 255
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesReservedName'
+      EXPRESSION ('[STATUS]' = 'Reserved')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 255 255 255
+        OUTLINECOLOR 0 0 0
+        SIZE 7
+      END
+    END
+
+    CLASS
+      NAME 'NodesOthers'
+      EXPRESSION ('[STATUS]' != 'Reserved' and '[STATUS]' != 'Testing' and '[STATUS]' != 'Building' and '[STATUS]' != 'Working' and '[STATUS]' != 'Inactive' and '[STATUS]' != 'Planned')
+      MINSCALE 10000
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 4
+      END
+      TEMPLATE "nodes.html"
+    END
+    CLASS
+      NAME 'NodesOthersName'
+      EXPRESSION ('[STATUS]' != 'Reserved' and '[STATUS]' != 'Testing' and '[STATUS]' != 'Building' and '[STATUS]' != 'Working' and '[STATUS]' != 'Inactive' and '[STATUS]' != 'Planned')
+      MAXSCALE 10000
+      LABEL
+         COLOR  44 6 126
+         FONT sans
+         TYPE truetype
+         SIZE 6
+         POSITION AUTO
+         PARTIALS FALSE
+         OUTLINECOLOR 255 255 253
+      END
+      STYLE
+        SYMBOL 'circle'
+        COLOR 0 0 0
         OUTLINECOLOR 0 0 0
         SIZE 7
       END

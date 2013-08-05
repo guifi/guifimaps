@@ -34,4 +34,21 @@ SYMBOL
  end
 END
 
+SYMBOL
+  # Symbol name (referenced in STYLEs)
+  NAME "square"
+  TYPE vector # Type of symbol
+  # Start of the symbol geometry
+  POINTS
+    0 0
+    0 1
+    1 1
+    1 0
+    0 0
+  END # end of POINTS
+  # The symbol should be filled
+  FILLED true
+  # Place the according to its center
+#  ANCHORPOINT 0.5 0.5
+END # end of SYMBOL
 
