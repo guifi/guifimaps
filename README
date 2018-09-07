@@ -1,5 +1,3 @@
 CRON
 
-3,18,33,48 * * * * cd /home/guifi/maps.guifi.net/guifimaps; php refresh.php > /dev/null 2>&1; cd data; rm -rf dlinks/*; rm -rf dnodes/*; ogr2ogr -f "ESRI Shapefile" dlinks dlinks.gml; ogr2ogr -f "ESRI Shapefile" dnodes dnodes.gml
-
-
+3,18,33,48 * * * * cd /home/guifi/maps.guifi.net/guifimaps; php refresh.php > /dev/null 2>&1; cd data; rm -rf dlinks/*; rm -rf dnodes/*; rm -rf sites/*; rm -rf paths/*; ogr2ogr -f "ESRI Shapefile" dlinks dlinks.gml; ogr2ogr -f "ESRI Shapefile" dnodes dnodes.gml; ogr2ogr -f "ESRI Shapefile" -where "OGR_GEOMETRY='Point'" -nln sites sites fiberfy.geojson; ogr2ogr -f "ESRI Shapefile" -where "OGR_GEOMETRY='LineString'" -nln paths paths fiberfy.geojson

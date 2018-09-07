@@ -130,4 +130,44 @@
   $hlast= @fopen("/tmp/last_update", "w") or die('Error!');
   fwrite($hlast,$last_now);
   fclose($hlast);
+
+  // Now we get all fiber information
+  // We setup cURL
+  $curl = curl_init();
+  $data = array(
+      'username' => getenv('LDAP_USERNAME'),
+      'password' => getenv('LDAP_PASSWORD')
+    );
+  $data_string = json_encode($data);
+  curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => "http://".getenv('FIBERFY_API').getenv('FIBERFY_LOGIN'),
+    CURLOPT_POST => 1,
+    CURLOPT_POSTFIELDS => $data_string,
+    CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    'Content-Length: ' . strlen($data_string))
+  ));
+
+  $response = curl_exec($curl);
+  // Now we have the token in a var
+  $token = json_decode($response, true)['token'];
+  $authorization = "Authorization: Bearer ".$token;
+  curl_close($curl);
+
+  $curl = curl_init();
+  curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => "http://".getenv('FIBERFY_API').getenv('FIBERFY_EXPORT'),
+    CURLOPT_HTTPGET => 1,
+    CURLOPT_HTTPHEADER => array($authorization)
+  ));
+
+  $geojson = curl_exec($curl);
+
+  curl_close($curl);
+
+  $fiberfy_file = @fopen('data/fiberfy.geojson', 'w') or die("Error!!");
+  fwrite($fiberfy_file, $geojson."\n");
+  fclose($fiberfy_file);
 ?>

@@ -151,6 +151,72 @@ END
 	 #*************-Final afegit
   END
 
+  # Paths
+    LAYER
+      NAME Paths
+      TYPE LINE
+      DATA paths/paths
+      TOLERANCE 8
+      STATUS ON
+      CLASS
+        NAME 'PathsND'
+        EXPRESSION ('[type]' = 'notdefined')
+        STYLE
+          COLOR 255 0 0
+          SIZE 1
+          MINSIZE 1
+        END
+      END
+      CLASS
+        NAME 'PathsUG'
+        EXPRESSION ('[type]' = 'underground')
+        STYLE
+          COLOR 255 0 0
+          SIZE 1
+          MINSIZE 1
+        END
+      END
+      CLASS
+        NAME 'PathsAI'
+        EXPRESSION ('[type]' = 'aerial')
+        STYLE
+          COLOR 255 0 0
+          SIZE 1
+          MINSIZE 1
+        END
+      END
+      CLASS
+        NAME 'PathsFC'
+        EXPRESSION ('[type]' = 'facade')
+        STYLE
+          COLOR 255 0 0
+          SIZE 1
+          MINSIZE 1
+        END
+      END
+
+      METADATA
+        "DESCRIPTION"   "Paths"
+        "RESULT_FIELDS" "name type"
+      END
+      PROJECTION
+        "proj=latlong"
+        "ellps=WGS84"
+        "datum=WGS84"
+        "no_defs"
+      END
+  	#*************-Afegit IDEC--Descripició de les capacitats
+  	METADATA
+        WMS_TITLE "Paths"
+        WMS_ABSTRACT "Paths"
+        WMS_SRS "EPSG:4326 EPSG:23031"
+  	  #Exposició Web Feature Service
+  	  "wfs_title"    "Paths"
+        "gml_include_items" "ALL"
+  	END
+  	 #*************-Final afegit
+    END
+
 # Nodes
   LAYER
     NAME Nodes
@@ -549,5 +615,114 @@ END
 	END
   END
 
-END
+  LAYER
+    NAME Sites
+    METADATA
+      "DESCRIPTION"   "Sites"
+      "RESULT_FIELDS" "name type status"
+    END
+    TYPE POINT
+    DATA sites/sites
+    TOLERANCE 8
+    STATUS ON
 
+
+    CLASS
+      NAME 'SitesND'
+      EXPRESSION ('[type]' = 'notdefined')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesMH'
+      EXPRESSION ('[type]' = 'manhole')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesPL'
+      EXPRESSION ('[type]' = 'pole')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesRM'
+      EXPRESSION ('[type]' = 'room')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesCB'
+      EXPRESSION ('[type]' = 'cabinet')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesPO'
+      EXPRESSION ('[type]' = 'poe')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesHK'
+      EXPRESSION ('[type]' = 'hook')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    CLASS
+      NAME 'SitesJM'
+      EXPRESSION ('[type]' = 'jump')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 0
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
+    PROJECTION
+      "proj=latlong"
+      "ellps=WGS84"
+      "datum=WGS84"
+      "no_defs"
+    END
+    METADATA
+      WMS_TITLE "Sites"
+      WMS_ABSTRACT "Sites"
+      #*************-Afegit IDEC--Descripició de les capacitats
+      WMS_SRS "EPSG:4326 EPSG:23031 EPSG:3857"
+      #Exposició Web Feature Service
+      "wfs_title"    "Sites"
+      "gml_include_items" "ALL"
+      #*************-Final afegit
+
+	END
+  END
+END
