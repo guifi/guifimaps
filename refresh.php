@@ -135,8 +135,8 @@
   // We setup cURL
   $curl = curl_init();
   $data = array(
-      'username' => getenv('LDAP_USERNAME'),
-      'password' => getenv('LDAP_PASSWORD')
+      'username' => getenv('FIBERFY_USERNAME'),
+      'password' => getenv('FIBERFY_PASSWORD')
     );
   $data_string = json_encode($data);
   curl_setopt_array($curl, array(

@@ -159,8 +159,17 @@ END
       TOLERANCE 8
       STATUS ON
       CLASS
+        NAME 'PathsNotWorking'
+        EXPRESSION ('[status]' != 'Working')
+        STYLE
+          COLOR 255 0 255
+          SIZE 1
+          MINSIZE 1
+        END
+      END
+      CLASS
         NAME 'PathsND'
-        EXPRESSION ('[type]' = 'notdefined')
+        EXPRESSION ('[type]' = 'notdefined' and '[status]' = 'Working')
         STYLE
           COLOR 255 0 0
           SIZE 1
@@ -169,7 +178,7 @@ END
       END
       CLASS
         NAME 'PathsUG'
-        EXPRESSION ('[type]' = 'underground')
+        EXPRESSION ('[type]' = 'underground' and '[status]' = 'Working')
         STYLE
           COLOR 255 0 0
           SIZE 1
@@ -178,7 +187,7 @@ END
       END
       CLASS
         NAME 'PathsAI'
-        EXPRESSION ('[type]' = 'aerial')
+        EXPRESSION ('[type]' = 'aerial' and '[status]' = 'Working')
         STYLE
           COLOR 255 0 0
           SIZE 1
@@ -187,7 +196,7 @@ END
       END
       CLASS
         NAME 'PathsFC'
-        EXPRESSION ('[type]' = 'facade')
+        EXPRESSION ('[type]' = 'facade' and '[status]' = 'Working')
         STYLE
           COLOR 255 0 0
           SIZE 1
@@ -626,10 +635,19 @@ END
     TOLERANCE 8
     STATUS ON
 
-
+    CLASS
+      NAME 'SitesNotWorking'
+      EXPRESSION ('[status]' != 'Working')
+      STYLE
+        SYMBOL 'square'
+        COLOR 255 0 255
+        OUTLINECOLOR 0 0 0
+        SIZE 6
+      END
+    END
     CLASS
       NAME 'SitesND'
-      EXPRESSION ('[type]' = 'notdefined')
+      EXPRESSION ('[type]' = 'notdefined' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -639,7 +657,7 @@ END
     END
     CLASS
       NAME 'SitesMH'
-      EXPRESSION ('[type]' = 'manhole')
+      EXPRESSION ('[type]' = 'manhole' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -649,7 +667,7 @@ END
     END
     CLASS
       NAME 'SitesPL'
-      EXPRESSION ('[type]' = 'pole')
+      EXPRESSION ('[type]' = 'pole' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -659,7 +677,7 @@ END
     END
     CLASS
       NAME 'SitesRM'
-      EXPRESSION ('[type]' = 'room')
+      EXPRESSION ('[type]' = 'room' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -669,7 +687,7 @@ END
     END
     CLASS
       NAME 'SitesCB'
-      EXPRESSION ('[type]' = 'cabinet')
+      EXPRESSION ('[type]' = 'cabinet' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -679,7 +697,7 @@ END
     END
     CLASS
       NAME 'SitesPO'
-      EXPRESSION ('[type]' = 'poe')
+      EXPRESSION ('[type]' = 'poe' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -689,7 +707,7 @@ END
     END
     CLASS
       NAME 'SitesHK'
-      EXPRESSION ('[type]' = 'hook')
+      EXPRESSION ('[type]' = 'hook' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
@@ -699,7 +717,7 @@ END
     END
     CLASS
       NAME 'SitesJM'
-      EXPRESSION ('[type]' = 'jump')
+      EXPRESSION ('[type]' = 'jump' and '[status]' = 'Working')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 0
