@@ -141,7 +141,7 @@
   $data_string = json_encode($data);
   curl_setopt_array($curl, array(
     CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => "http://".getenv('FIBERFY_API').getenv('FIBERFY_LOGIN'),
+    CURLOPT_URL => getenv('FIBERFY_API').getenv('FIBERFY_LOGIN'),
     CURLOPT_POST => 1,
     CURLOPT_POSTFIELDS => $data_string,
     CURLOPT_HTTPHEADER => array(
@@ -158,7 +158,7 @@
   $curl = curl_init();
   curl_setopt_array($curl, array(
     CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => "http://".getenv('FIBERFY_API').getenv('FIBERFY_EXPORT'),
+    CURLOPT_URL => getenv('FIBERFY_API').getenv('FIBERFY_EXPORT'),
     CURLOPT_HTTPGET => 1,
     CURLOPT_HTTPHEADER => array($authorization)
   ));
