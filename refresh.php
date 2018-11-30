@@ -9,7 +9,7 @@
 
   $members = array();
 
-  $hlastnow = @fopen("http://".getenv('GUIFI_WEB')."/guifi/refresh/maps", "r") or die('Error reading changes\n');
+  $hlastnow = @fopen(getenv('GUIFI_WEB')."/guifi/refresh/maps", "r") or die('Error reading changes\n');
   $last_now = fgets($hlastnow);
   fclose($hlastnow);
 
