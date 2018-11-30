@@ -160,10 +160,11 @@ END
       STATUS ON
       CLASS
         NAME 'PathsNotWorking'
-        EXPRESSION ('[status]' != 'Working')
+        EXPRESSION ('[status]' != 'Working' and '[status]' != 'Planned')
         STYLE
           COLOR 255 0 255
           SIZE 1
+          WIDTH 2.0
           MINSIZE 1
         END
       END
@@ -173,6 +174,7 @@ END
         STYLE
           COLOR 255 0 0
           SIZE 1
+          WIDTH 2.0
           MINSIZE 1
         END
       END
@@ -182,6 +184,7 @@ END
         STYLE
           COLOR 255 0 0
           SIZE 1
+          WIDTH 2.0
           MINSIZE 1
         END
       END
@@ -191,6 +194,7 @@ END
         STYLE
           COLOR 255 0 0
           SIZE 1
+          WIDTH 2.0
           MINSIZE 1
         END
       END
@@ -200,6 +204,7 @@ END
         STYLE
           COLOR 255 0 0
           SIZE 1
+          WIDTH 2.0
           MINSIZE 1
         END
       END
@@ -637,7 +642,7 @@ END
 
     CLASS
       NAME 'SitesNotWorking'
-      EXPRESSION ('[status]' != 'Working')
+      EXPRESSION ('[status]' != 'Working' and '[status]' != 'Projected')
       STYLE
         SYMBOL 'square'
         COLOR 255 0 255
