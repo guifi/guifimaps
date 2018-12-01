@@ -27,7 +27,7 @@
   }
 
   echo "Dumping links in gml format\n";
-  $hlinks = @fopen("http://".getenv('GUIFI_WEB')."/guifi/gml/".$rootZone."/links/csv", "r") or die("Error getting links cv\n");;
+  $hlinks = @fopen(getenv('GUIFI_WEB')."/guifi/gml/".$rootZone."/links/csv", "r") or die("Error getting links cv\n");;
   if ($hlinks) {
    while (!feof($hlinks)) {
        print_r($member);
@@ -82,7 +82,7 @@
   $members = array();
 
   echo "Dumping nodes in gml format\n";
-  $hnodes = @fopen("http://".getenv('GUIFI_WEB')."/guifi/gml/".$rootZone."/nodes/csv", "r");
+  $hnodes = @fopen(getenv('GUIFI_WEB')."/guifi/gml/".$rootZone."/nodes/csv", "r");
   if ($hnodes) {
    while (!feof($hnodes)) {
        $member = explode(',',stream_get_line($hnodes, 4096,"\n"));
