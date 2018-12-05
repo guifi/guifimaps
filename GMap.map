@@ -25,7 +25,7 @@ WEB
     WMS_ABSTRACT "Localització de nodes"
     WMS_FEATURE_INFO_MIME_TYPE  "text/html"
     WMS_ONLINERESOURCE "http://wms.guifi.net/cgi-bin/mapserv?map=/home/guifi/maps.guifi.net/guifimaps/GMap.map&"
-    WMS_SRS "EPSG:4326 EPSG:23031"
+    WMS_SRS "EPSG:4326 EPSG:23031 EPSG:3857"
 "wms_enable_request"   "*"
   END
  #*************-Final afegit
