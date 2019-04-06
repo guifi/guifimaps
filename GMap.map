@@ -11,6 +11,7 @@ EXTENT -180 -90 180 90
 UNITS dd
 SHAPEPATH "data/"
 CONFIG "MS_ERRORFILE" "/tmp/ms_error.txt"
+#DEBUG 5
 PROJECTION
    "init=epsg:4326"
 END
@@ -24,7 +25,7 @@ WEB
     WMS_TITLE "Nodes GUIFI.NET"
     WMS_ABSTRACT "Localització de nodes"
     WMS_FEATURE_INFO_MIME_TYPE  "text/html"
-    WMS_ONLINERESOURCE "http://wms.guifi.net/cgi-bin/mapserv?map=/home/guifi/maps.guifi.net/guifimaps/GMap.map&"
+    WMS_ONLINERESOURCE "http://guifimaps.guifi.net/cgi-bin/mapserv?map=/var/www/guifimaps/GMap.map&"
     WMS_SRS "EPSG:4326 EPSG:23031"
 "wms_enable_request"   "*"
   END
@@ -71,6 +72,19 @@ END
         SYMBOL 'dashed'
         COLOR 0 128 255
         PATTERN 2 2 2 2END
+        SIZE 1
+        MINSIZE 1
+      END
+      TEMPLATE "links.html"
+    END
+    CLASS
+      NAME 'LinksBuildingWDS'
+      MAXSCALE 1000000000
+      EXPRESSION ('[STATUS]' = 'Building' AND '[LINK_TYPE]' = 'wds')
+      STYLE
+        SYMBOL 'dashed'
+        COLOR 255 236 139
+        PATTERN 2 2 2 2 END
         SIZE 1
         MINSIZE 1
       END
